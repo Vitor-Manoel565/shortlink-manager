@@ -1,10 +1,8 @@
-const mongoose = require("mongoose");
-const { nanoid } = require("nanoid");
-const ShortLinkSchema = require("./schema/index"); 
-const { hostname } = require("os");
+import mongoose from "mongoose";
+import { nanoid } from "nanoid";
+import ShortLinkSchema from "./schema/index.js"; // Verifique o caminho e a extensão do arquivo
 
-
-class LinkShortener  {
+class LinkShortener {
   constructor() {
     this.db = null;
   }
@@ -42,18 +40,20 @@ class LinkShortener  {
   async createShortLink(originalUrl, hostName, expire) {
     if (!this.db) throw new Error("Not connected to the database");
 
-    if (!originalUrl && hostName) throw new Error("Original URL and hostName is required");
+    if (!originalUrl || !hostName) throw new Error("Original URL and hostName are required");
 
     const shortId = nanoid(4);
     const shortedLink = `${hostName}/${shortId}`;
+
+    console.log("Shorted link:", shortedLink);
 
     const ShortLink = mongoose.model("ShortLink", ShortLinkSchema);
 
     const newLink = new ShortLink({
       originalUrl,
       shortedLink,
-      expire: expire || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // default 30 days
       createdAt: new Date(),
+      expire: expire ? new Date(expire) : null
     });
 
     await newLink.save();
@@ -75,7 +75,7 @@ class LinkShortener  {
     }
 
     return findLink;
-  };
+  }
 }
 
-module.exports = new LinkShortener();
+export default new LinkShortener();
