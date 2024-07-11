@@ -59,7 +59,11 @@ class LinkShortener {
 
     await newLink.save();
 
-    return newLink;
+    return {
+      originalUrl,
+      shortedLink,
+      expire: newLink.expire,
+    };
   }
 
   async getOriginalUrl(shortLink) {
@@ -75,8 +79,12 @@ class LinkShortener {
       throw new Error("Link expired");
     }
 
-    return findLink;
-  }
+    return {
+      originalUrl: findLink.originalUrl,
+      shortedLink: findLink.shortedLink,
+      expire: findLink.expire,
+    };
+    }
 }
 
 export default new LinkShortener();
