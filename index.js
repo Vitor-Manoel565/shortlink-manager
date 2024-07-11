@@ -53,7 +53,7 @@ class LinkShortener {
       originalUrl,
       shortedLink,
       createdAt: new Date(),
-      expire: expire ? new Date(expire) : null
+      expire: expire ? new Date(expire) : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // default 30 days
     });
 
     await newLink.save();
