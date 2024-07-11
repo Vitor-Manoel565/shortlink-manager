@@ -44,10 +44,11 @@ class LinkShortener {
 
     const shortId = nanoid(4);
     const shortedLink = `${hostName}/${shortId}`;
-
-    console.log("Shorted link:", shortedLink);
-
     const ShortLink = mongoose.model("ShortLink", ShortLinkSchema);
+
+    if(await ShortLink.findOne({ shortedLink })) {
+      throw new Error("Short link already exists");
+    }
 
     const newLink = new ShortLink({
       originalUrl,
