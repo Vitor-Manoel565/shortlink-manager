@@ -1,0 +1,15 @@
+{
+  "name": "shortlink-manager",
+  "version": "1.0.0",
+  "description": "shortlink-manager é um pacote npm que permite criar links encurtados utilizando um banco de dados (MongoDB). Ideal para desenvolvedores que desejam integrar um encurtador de URL em seus projetos, proporcionando uma maneira pratica de redirecionar URLs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vitor_porfirio",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^8.5.0",
+    "nanoid": "^5.0.7"
+  }
+}
